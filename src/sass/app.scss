@@ -1,0 +1,17 @@
+@use "sass:color";
+$action-color: #cfb87c;
+
+// .v-main {
+//   background-color: color.scale(#fff2d2, $lightness: 20%);
+// }
+
+#home {
+  .navBar {
+    background-color: #000;
+    color: #fff;
+  }
+  .searchBar {
+    width: 80%;
+    flex: none;
+  }
+}
