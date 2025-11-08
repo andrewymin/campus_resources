@@ -3,6 +3,8 @@
     import { ref } from 'vue'
 
     const dialog = ref(false)
+    const visible = ref(false)
+    const password = ref('')
 </script>
 
 <template>
@@ -22,22 +24,44 @@
         </v-app-bar>
 
     <v-dialog v-model="dialog" max-width="90dvw" >
-       <v-card style="border-radius: 16px;" class="pa-0 text-center">
-        <v-container class="ma-0 pa-0">
+       <v-card style="border-radius: 16px;" class="pa-0 text-center bg-grey-lighten-3">
+        <v-container class="ma-0 py-6">
           <v-row
-          align="center"
             no-gutters
           >
             <v-col cols="12" md="6">
               <img src="../assets/student_login.png" width="80%" alt="studing student">              
-              <div>
-                <p><span>ID</span>test</p>
-                <p><span>PASS</span>test</p>
+              <div class="demoCred">
+                <h2>Demo credientials:</h2>
+                <div>
+                  <p><span>ID: </span>student@demo.edu</p>
+                  <p><span>PASS: </span>studentPass123!</p>
+                </div>
               </div>
             </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field></v-text-field>
-            </v-col>
+            <v-col cols="12" md="6" class="right-side pa-8 d-flex flex-column justify-center">
+            <!-- Your form content here -->
+              <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student <br/> Login</h2>
+              <v-form class="w-75 align-self-center">
+                <v-text-field
+                  label="Email"
+                  type="email"
+                  prepend-icon="mdi-email"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  label="Password"
+                  v-model="password"
+                  :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="visible ? 'text' : 'password'"
+                  @click:append-inner="visible = !visible"
+                  prepend-icon="mdi-lock"
+                  required
+                ></v-text-field>
+              <v-btn type="submit" color="uni-gold" class="mt-4">Login</v-btn>
+            </v-form>
+            <p>Login as Admin</p>
+          </v-col>
           </v-row>
         </v-container>
        </v-card>
@@ -69,7 +93,7 @@
     </v-main>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
     .resources {
         display: flex;
         justify-content: center;
@@ -90,6 +114,15 @@
     .searchBar {
         width: 80%;
         flex: none;
+    }
+    .demoCred {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      > div {
+        text-align: start;
+      }
     }
     
 </style>

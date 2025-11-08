@@ -1,8 +1,14 @@
+.shrikhand-regular {
+  font-family: "Shrikhand", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #home .navBar {
   background-color: #000;
   color: #fff;
 }
-#home .search {
+#home .searchBar {
   width: 80%;
   flex: none;
 }/*# sourceMappingURL=app.css.map */

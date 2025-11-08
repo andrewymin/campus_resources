@@ -18,6 +18,15 @@ const vuetify = createVuetify({
       mdi,
     }
   },
+  theme: {
+    themes: {
+      light: {
+        colors: {
+          'uni-gold': '#CFB87C', 
+        },
+      },
+    },
+  },
   components,
   directives,
 })
