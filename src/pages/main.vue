@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-    const test = () => alert('working?')
+    // const test = () => alert('working?')
 </script>
 
 <template>
