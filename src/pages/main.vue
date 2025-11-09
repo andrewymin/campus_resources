@@ -35,12 +35,12 @@
       <!-- Popular Resources-->
       <div class="d-flex flex-column justifiy-center align-center h-100 ga-16">
         <div class="search">
-          <h1 class="homeTitle">Campus Resources</h1>
+          <h1 class="homeTitle mb-8">Campus Resources</h1>
           <v-text-field 
               class="searchBar"
               label="Search resources..."
               prepend-inner-icon="mdi-magnify"
-              variant="solo"
+              variant="outlined"
               density="comfortable"
               single-line
               clearable
@@ -49,9 +49,30 @@
         <div>
           <h2 style="text-decoration: underline;" class="text-center">Popular Resources</h2>
           <v-container class="resources">
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" ></v-card>
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" ></v-card>
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" ></v-card>
+              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
+                <v-icon
+                  icon="mdi-bookmark-outline"
+                  end
+                  class="position-absolute"
+                  style="cursor: pointer; top: 15px; right: 15px;"
+                ></v-icon>
+              </v-card>
+              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
+                <v-icon
+                  icon="mdi-bookmark-outline"
+                  end
+                  class="position-absolute"
+                  style="cursor: pointer; top: 15px; right: 15px;"
+                ></v-icon>
+              </v-card>
+              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
+                <v-icon
+                  icon="mdi-bookmark-outline"
+                  end
+                  class="position-absolute"
+                  style="cursor: pointer; top: 15px; right: 15px;"
+                ></v-icon>
+              </v-card>
           </v-container> 
         </div>
       </div>
@@ -85,6 +106,7 @@
                     <v-text-field
                       label="Password"
                       v-model="password"
+                      placeholder="Enter your password"
                       :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="visible ? 'text' : 'password'"
                       @click:append-inner="visible = !visible"
@@ -117,6 +139,7 @@
                     <v-text-field
                       label="Password"
                       v-model="password"
+                      placeholder="Enter your password"
                       :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="visible ? 'text' : 'password'"
                       @click:append-inner="visible = !visible"
