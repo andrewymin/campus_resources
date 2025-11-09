@@ -1,6 +1,10 @@
 @use "sass:color";
 $action-color: #cfb87c;
 
+.v-app {
+  font-family: "Work Sans", sans-serif;
+}
+
 .shrikhand-regular {
   font-family: "Shrikhand", serif;
   font-weight: 400;

@@ -72,10 +72,12 @@
       <!-- Nav Bar -->
         <v-app-bar class="navBar" :elevation="0">
             <v-app-bar-title class="ml-5 ">Campus</v-app-bar-title>
+
             <v-btn
               @click="goToDashboard"
               color="success"
             >Dashboard</v-btn>
+            
             <v-hover v-slot="{ isHovering, props}">
                 <v-btn 
                   v-bind="props"
@@ -157,7 +159,7 @@
                 </v-col>
                 <v-col cols="12" md="6" class="right-side pa-8 d-flex flex-column justify-center ga-3">
                 <!-- Your form content here -->
-                  <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student <br/> Login</h2>
+                  <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student<br/>Login</h2>
                   <v-form class="w-75 align-self-center">
                     <v-text-field
                       v-model="email"
