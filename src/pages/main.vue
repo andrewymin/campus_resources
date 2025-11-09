@@ -1,33 +1,89 @@
 
 <script setup lang="ts">
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue';
+    import { useRouter } from 'vue-router';
 
+    // router logic
+    const router = useRouter();
+    const loading = ref(false); // optional: manage loading state during API calls
+    const handleLoginSubmit = async () => {
+      if (!email.value || !password.value) {
+        // Basic validation check
+        alert('Please enter both email and password.');
+        return;
+      }
+
+      loading.value = true;
+
+      try {
+        // 3. Perform asynchronous actions here (e.g., API call)
+        // await api.loginUser(email.value, password.value);
+        // HOWEVER for this demo it will be in localStorage
+        
+        // Simulate a successful login delay
+        await new Promise(resolve => setTimeout(resolve, 1000)); 
+
+        // 4. Navigate to a new page after successful submission/login
+        console.log('Login successful. Navigating to dashboard...');
+        router.push('/dashboard'); 
+        // Or use named routes: router.push({ name: 'DashboardPage' });
+
+      } catch (error) {
+        console.error('Login failed:', error);
+        // Handle error messages here
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const goToDashboard = () => {
+      router.push('/dashboard'); 
+      // this is for testing till json data is added for form submit
+    }
+
+    // login logic    
     const dialog = ref(false)
     const visible = ref(false)
+    const email = ref('')
     const password = ref('')
-    const loginMode = ref('student')
-
+    const loginMode = ref('student');
     const toggleLoginMode = () => {
       loginMode.value = loginMode.value === 'student' ? 'admin' : 'student';
       console.log(loginMode.value)
-    };
+    };    
 
+    // bookmark temp logic till data is given
+    const isBookmarked = ref(false);
+    const bookmarkIcon = computed(()=>{
+      return isBookmarked.value ? 'mdi-bookmark' : 'mdi-bookmark-outline';
+    })
+    const bookmarkColor = computed(()=>{
+      return isBookmarked.value ? 'uni-gold' : 'black';
+    })
+    const toggleBookmark = () => {
+      isBookmarked.value = !isBookmarked.value;
+      // typically make an API call here to save the status to backend
+    }
 
 </script>
 
 <template>
-    <v-main id="home">
+    <div id="home">
       <!-- Nav Bar -->
         <v-app-bar class="navBar" :elevation="0">
             <v-app-bar-title class="ml-5 ">Campus</v-app-bar-title>
+            <v-btn
+              @click="goToDashboard"
+              color="success"
+            >Dashboard</v-btn>
             <v-hover v-slot="{ isHovering, props}">
                 <v-btn 
-                v-bind="props"
-                variant="tonal"
-                :class="{ 'on-hover': isHovering}"
-                :color="isHovering ? '#cfb87c' : 'undefined'"
-                class="mr-5"
-                @click="dialog = true"
+                  v-bind="props"
+                  variant="tonal"
+                  :class="{ 'on-hover': isHovering}"
+                  :color="isHovering ? '#cfb87c' : 'undefined'"
+                  class="mr-5"
+                  @click="dialog = true"
                 >Login</v-btn>
             </v-hover>
         </v-app-bar>
@@ -51,26 +107,32 @@
           <v-container class="resources">
               <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
                 <v-icon
-                  icon="mdi-bookmark-outline"
+                  :icon="bookmarkIcon"
+                  :color="bookmarkColor"
                   end
                   class="position-absolute"
                   style="cursor: pointer; top: 15px; right: 15px;"
+                  @click="toggleBookmark"
                 ></v-icon>
               </v-card>
               <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
                 <v-icon
-                  icon="mdi-bookmark-outline"
+                  :icon="bookmarkIcon"
+                  :color="bookmarkColor"
                   end
                   class="position-absolute"
                   style="cursor: pointer; top: 15px; right: 15px;"
+                  @click="toggleBookmark"
                 ></v-icon>
               </v-card>
               <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
                 <v-icon
-                  icon="mdi-bookmark-outline"
+                  :icon="bookmarkIcon"
+                  :color="bookmarkColor"
                   end
                   class="position-absolute"
                   style="cursor: pointer; top: 15px; right: 15px;"
+                  @click="toggleBookmark"
                 ></v-icon>
               </v-card>
           </v-container> 
@@ -98,6 +160,7 @@
                   <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student <br/> Login</h2>
                   <v-form class="w-75 align-self-center">
                     <v-text-field
+                      v-model="email"
                       label="Email"
                       type="email"
                       prepend-icon="mdi-email"
@@ -129,7 +192,7 @@
                 <v-col cols="12" md="6" class=" pa-8 d-flex flex-column justify-center ga-3">
                 <!-- Your form content here -->
                   <h2 class="text-h2 mb-4 text-center shrikhand-regular">Admin<br/>Login</h2>
-                  <v-form class="w-75 align-self-center">
+                  <v-form class="w-75 align-self-center" @submit.prevent="handleLoginSubmit">
                     <v-text-field
                       label="Email"
                       type="email"
@@ -146,7 +209,13 @@
                       prepend-icon="mdi-lock"
                       required
                     ></v-text-field>
-                    <v-btn type="submit" color="uni-gold" class="mt-4">Login</v-btn>
+                    <v-btn 
+                      type="submit" 
+                      color="uni-gold" 
+                      class="mt-4"
+                      :loading="loading"
+                      :disabled="loading"
+                    >Login</v-btn>
                   </v-form>
                   <div class="d-flex justify-center align-center">
                     <v-btn 
@@ -174,7 +243,7 @@
         </v-card>
       </v-dialog>
 
-    </v-main>
+    </div>
 </template>
 
 <style lang="scss" scoped>
