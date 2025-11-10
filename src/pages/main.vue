@@ -9,9 +9,10 @@
     const router = useRouter();
     const dialog = ref(false)
     const loggedIn = ref(false)
+    const role = localStorage.getItem('role')
 
     onMounted(()=>{
-      localStorage.getItem('role') ? loggedIn.value = true : loggedIn.value = false; 
+      role ? loggedIn.value = true : loggedIn.value = false; 
     })
 
     const goToDash = () => router.push('/dashboard');
@@ -61,8 +62,16 @@
               </template>
               <v-list>
                 <v-list-item
-                  title="Student name"
+                  v-if="role==='student'"
+                  title="student name"
                   value="student"
+                  @click="goToDash"  
+                >
+                </v-list-item>
+                <v-list-item
+                  v-else
+                  title="admin name"
+                  value="admin"
                   @click="goToDash"  
                 >
                 </v-list-item>

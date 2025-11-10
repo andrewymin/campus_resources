@@ -5,14 +5,14 @@
       "username": "admin@demo.edu",
       "password": "adminPass123!",
       "role": "admin",
-      "name": "Admin"
+      "name": "Admin one"
     },
     {
       "id": 2,
       "username": "student@demo.edu",
       "password": "studentPass123!",
       "role": "student",
-      "name": "Student"
+      "name": "Student one"
     }
   ],
   "resources": [

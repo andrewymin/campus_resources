@@ -59,6 +59,14 @@ export function saveData(data: Data) {
   localStorage.setItem('campusData', JSON.stringify(data))
 }
 
+// Get user data
+export function getUser(userId: Number) {
+    const stored = localStorage.getItem('campusData')
+    if (!stored) return
+    const parsed = JSON.parse(stored) as Data
+    return parsed.users.find((user)=> user.id === userId)
+}
+
 // Get a specific category (e.g. resources, announcements)
 export function getSection<T extends keyof Data>(key: T): Data[T] {
   const stored = localStorage.getItem('campusData')

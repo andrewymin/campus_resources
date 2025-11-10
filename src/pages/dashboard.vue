@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import { ref } from 'vue';    
   import { useRouter } from 'vue-router';
+  import data from '../data/data.json';
+
+  let studentData = data.users.find((user)=> user.role === 'student');
+  let adminData = data.users.find((user)=> user.role === 'admin');
+  const role = localStorage.getItem('role');
 
   // router logic
   const router = useRouter();
@@ -26,18 +31,31 @@
       width="300" 
       color="uni-gold"
     >
-      <v-list>
-        <v-list-item title="Announcements/menu"></v-list-item>
-        <v-list-item link title="Link A"></v-list-item>
-        <v-list-item link title="Link B"></v-list-item>
+      <v-list v-if="role==='admin'" lines="three">
+        <v-list-item class="font-weight-bold">Announcements</v-list-item>
+        <v-list-item
+          v-for="item in data.announcements" 
+          :key="item.title"
+          :title="item.title"
+          :subtitle="item.description"
+        ></v-list-item>
       </v-list>
-    </v-navigation-drawer>
 
-    <!-- RIGHT SIDE CONTENT (HEADER and MAIN) -->
+      <v-list v-else lines="three">
+        <v-list-item class="font-weight-bold">Announcements</v-list-item>
+        <v-list-item
+          v-for="item in data.announcements" 
+          :key="item.title"
+          :title="item.title"
+          :subtitle="item.description"
+        ></v-list-item>
+      </v-list>
+
+    </v-navigation-drawer>
       
       <!-- HEADER/NAV BAR -->
        <v-toolbar class="text-white bg-black rounded-xl mx-4 w-auto">
-          <v-toolbar-title class="text-h4 pb-3"><span class="text-subtitle-2">Your Dashboard</span><br/>Hi, Role</v-toolbar-title>
+          <v-toolbar-title class="text-h4 pb-3"><span class="text-subtitle-2">Your Dashboard</span><br/>Hi, {{ role?.toUpperCase() }}</v-toolbar-title>
           <div class="d-flex align-center ga-4">
             <v-icon 
               icon="mdi-home-variant" 
@@ -46,9 +64,15 @@
               style="cursor: pointer;"
               @click="goHome"
             ></v-icon>
-            <div class="d-flex flex-column align-end text-body-2">
-              <p>student Name</p>              
-              <p>student@demo.edu</p>              
+            <div class="d-flex flex-column align-end text-body-2"
+              v-if="role==='student'">
+              <p>{{ studentData?.name }}</p>              
+              <p>{{ studentData?.username }}</p>              
+            </div>
+            <div class="d-flex flex-column align-end text-body-2"
+              v-else>
+              <p>{{ adminData?.name }}</p>              
+              <p>{{ adminData?.username }}</p>              
             </div>
             <v-icon 
               icon="mdi-account-circle" 
@@ -63,8 +87,8 @@
       <!-- MAIN CONTENT AREA -->
       <v-container fluid class="mt-8">
         <v-row>
-          <v-col cols="12">
-            <h1 class="logged-title-font pl-5">Title based on role</h1>
+          <v-col v-if="role==='student'" cols="12">
+            <h1 class="logged-title-font pl-5">Your Bookmarks</h1>
           </v-col>
           <v-col 
             v-for="item in savedItems" 
@@ -91,4 +115,5 @@
     font-family:'Times New Roman', Times, serif;
     text-decoration: underline;
   }
+
 </style>

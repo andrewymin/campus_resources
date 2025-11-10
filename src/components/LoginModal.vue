@@ -30,6 +30,7 @@
     }
 
     loading.value = true;
+    // Would replace this logic with finding user unique id to get their data using DB
     let studentData = data.users.find((user)=> user.role === 'student');
     let adminData = data.users.find((user)=> user.role === 'admin');
 
@@ -56,6 +57,18 @@
     }
   };
 
+  // For testing and demo UX for users
+  const autoLogin = (role: String) => {
+    if(role === 'student') {
+        email.value = 'student@demo.edu';
+        password.value = 'studentPass123!';
+        handleLoginSubmit();
+    }
+    email.value = 'admin@demo.edu';
+    password.value = 'adminPass123!';
+    handleLoginSubmit();
+  }
+
 </script>
 
 <template>
@@ -79,8 +92,12 @@
                 </div>
             </v-col>
             <v-col cols="12" md="6" class="right-side pa-8 d-flex flex-column justify-center ga-3">
-            <!-- Your form content here -->
-                <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student<br/>Login</h2>
+
+                <h2 class="text-h2 mb-4 text-center shrikhand-regular">
+                <span
+                    style="cursor: pointer;"
+                    @click="autoLogin('student')"                  
+                >Student<br/>Login</span></h2>
                 <v-form class="w-75 align-self-center" @submit.prevent="handleLoginSubmit">
                     <v-text-field
                         v-model="email"
@@ -113,8 +130,12 @@
             </template>
             <template v-else="loginMode === 'admin'">
             <v-col cols="12" md="6" class=" pa-8 d-flex flex-column justify-center ga-3">
-            <!-- Your form content here -->
-                <h2 class="text-h2 mb-4 text-center shrikhand-regular">Admin<br/>Login</h2>
+
+                <h2 class="text-h2 mb-4 text-center shrikhand-regular">
+                <span
+                    style="cursor: pointer;"
+                    @click="autoLogin('admin')"                
+                >Admin<br/>Login</span></h2>
                 <v-form class="w-75 align-self-center" @submit.prevent="handleLoginSubmit">
                 <v-text-field
                     v-model="email"
