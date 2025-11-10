@@ -1,0 +1,80 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin@demo.edu",
+      "role": "admin",
+      "name": "Admin One"
+    },
+    {
+      "id": 2,
+      "username": "student@demo.edu",
+      "role": "user",
+      "name": "Student One"
+    }
+  ],
+  "resources": [
+    {
+      "id": 1,
+      "title": "Counseling Center",
+      "category": "Wellness",
+      "description": "Mental health services and walk-in counseling.",
+      "location": "Building A, Room 101",
+      "contact": "counsel@university.edu",
+      "hours": "Mon-Fri 9am-4pm",
+      "tags": ["mental health", "support", "students"]
+    },
+    {
+      "id": 2,
+      "title": "Career Services",
+      "category": "Career",
+      "description": "Resume reviews, interviews, and career fairs.",
+      "location": "Student Union, 2nd Floor",
+      "contact": "careers@university.edu",
+      "hours": "Mon-Fri 8am-5pm",
+      "tags": ["jobs", "internships", "workshops"]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Resume Workshop",
+      "location": "Student Union - Room 210",
+      "organizer": "Career Services",
+      "description": "Bring your resume for live feedback.",
+      "tags": ["career", "workshop"]
+    },
+    {
+      "id": 2,
+      "title": "Mindfulness Walk",
+      "location": "Campus Green",
+      "organizer": "Counseling Center",
+      "description": "A guided walk and short breathing exercises.",
+      "tags": ["wellness", "outdoors"]
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Stress Relief Puppies are Back!",
+      "description": "Therapy dogs will be roaming around the campus park. Come bye and take a break, as long as your not allergic it'll be fun times!"
+    },
+    {
+      "id": 2,
+      "title": "Ghost Pepper Tenders Returns to Dining Hall!",
+      "description": "The very popular and diabolically flamin' tenders are back for a limited time. Despite the horrors of last ghost pepper incident..."
+    },
+    {
+      "id": 3,
+      "title": "Stress Relief Puppies are Back!",
+      "description": "Get your caffeine addiction scratched at the Hub for this week! From 8am-11am, make sure to bring your student ID for it."
+    }
+  ],
+  "bookmarks": [
+    {
+      "id": 1,
+      "userId": 2,
+      "resourceId": 2
+    }
+  ]
+}
