@@ -3,54 +3,46 @@
     {
       "id": 1,
       "username": "admin@demo.edu",
+      "password": "adminPass123!",
       "role": "admin",
-      "name": "Admin One"
+      "name": "Admin"
     },
     {
       "id": 2,
       "username": "student@demo.edu",
+      "password": "studentPass123!",
       "role": "user",
-      "name": "Student One"
+      "name": "Student"
     }
   ],
   "resources": [
     {
       "id": 1,
       "title": "Counseling Center",
-      "category": "Wellness",
       "description": "Mental health services and walk-in counseling.",
       "location": "Building A, Room 101",
-      "contact": "counsel@university.edu",
-      "hours": "Mon-Fri 9am-4pm",
-      "tags": ["mental health", "support", "students"]
+      "hours": "Mon-Fri 9am-4pm"
     },
     {
       "id": 2,
       "title": "Career Services",
-      "category": "Career",
       "description": "Resume reviews, interviews, and career fairs.",
       "location": "Student Union, 2nd Floor",
-      "contact": "careers@university.edu",
-      "hours": "Mon-Fri 8am-5pm",
-      "tags": ["jobs", "internships", "workshops"]
-    }
-  ],
-  "events": [
-    {
-      "id": 1,
-      "title": "Resume Workshop",
-      "location": "Student Union - Room 210",
-      "organizer": "Career Services",
-      "description": "Bring your resume for live feedback.",
-      "tags": ["career", "workshop"]
+      "hours": "Mon-Fri 8am-5pm"
     },
     {
-      "id": 2,
+      "id": 3,
+      "title": "Resume Workshop",
+      "location": "Student Union - Room 210",
+      "description": "Bring your resume for live feedback.",
+      "hours": "Mon-Fri 11am-6pm"
+    },
+    {
+      "id": 4,
       "title": "Mindfulness Walk",
       "location": "Campus Green",
-      "organizer": "Counseling Center",
       "description": "A guided walk and short breathing exercises.",
-      "tags": ["wellness", "outdoors"]
+      "hours": "Mon-Fri 9am-4pm"
     }
   ],
   "announcements": [

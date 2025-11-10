@@ -3,6 +3,7 @@
     import { ref, computed } from 'vue';
     import { useRouter } from 'vue-router';
     import  LoginModal  from '../components/LoginModal.vue';
+    import { resetData } from '../utils/storage';
 
     // router logic
     const router = useRouter();
@@ -36,10 +37,15 @@
         <v-app-bar class="navBar" :elevation="0">
             <v-app-bar-title class="ml-5 ">Campus</v-app-bar-title>
 
-            <v-btn
+            <!-- <v-btn
               @click="goToDashboard"
               color="success"
-            >Dashboard</v-btn>
+            >Dashboard</v-btn> -->
+
+            <v-btn
+              @click="resetData"
+              color="red-darken-1"
+            >Reset Data</v-btn>
             
             <v-hover v-slot="{ isHovering, props}">
                 <v-btn 
@@ -131,15 +137,6 @@
     .searchBar {
         width: 80%;
         flex: none;
-    }
-    .demoCred {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      > div {
-        text-align: start;
-      }
     }
     
 </style>
