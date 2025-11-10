@@ -75,7 +75,6 @@ export function updateSection<T extends keyof Data>(key: T, newData: Data[T]) {
   localStorage.setItem('campusData', JSON.stringify(parsed))
 }
 
-
 // Reset all data 
 export function resetData() {
   localStorage.clear()

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-
+  import data from '../data/data.json';
 
   const props = defineProps<{ modelValue: boolean }>()
   const emit = defineEmits(['update:modelValue']) 
@@ -11,41 +11,49 @@
   const loginMode = ref('student');
   const email = ref('')
   const password = ref('')
+  const snackbarVisible = ref(false);
+  const snackbarText = ref('');
 
   const toggleLoginMode = () => {
     loginMode.value = loginMode.value === 'student' ? 'admin' : 'student';
-    console.log(loginMode.value)
+    // console.log(loginMode.value)
   };  
 
   const loading = ref(false); // optional: manage loading state during API calls
+
   const handleLoginSubmit = async () => {
-        if (!email.value || !password.value) {
-        // Basic validation check
-        alert('Please enter both email and password.');
-        return;
-        }
+    if (!email.value || !password.value) {
+      // Basic validation check
+      snackbarText.value = 'Please enter both email and password.';
+      snackbarVisible.value = true;
+      return;
+    }
 
-        loading.value = true;
+    loading.value = true;
+    let studentData = data.users.find((user)=> user.role === 'student');
+    let adminData = data.users.find((user)=> user.role === 'admin');
 
-        try {
-        // 3. Perform asynchronous actions here (e.g., API call)
-        // await api.loginUser(email.value, password.value);
-        // HOWEVER for this demo it will be in localStorage
-        
-        // Simulate a successful login delay
-        await new Promise(resolve => setTimeout(resolve, 1000)); 
+    const isStudent = studentData?.password === password.value && studentData.username === email.value;
+    const isAdmin = adminData?.password === password.value && adminData.username === email.value;
 
-        // 4. Navigate to a new page after successful submission/login
-        console.log('Login successful. Navigating to dashboard...');
+    try {
+      // Successful login 
+      if (isStudent && loginMode.value === 'student') {
+        localStorage.setItem('role', 'student');
         router.push('/dashboard'); 
-        // Or use named routes: router.push({ name: 'DashboardPage' });
-
-        } catch (error) {
-        console.error('Login failed:', error);
-        // Handle error messages here
-        } finally {
-        loading.value = false;
-        }
+      } else if (isAdmin && loginMode.value === 'admin') {
+        localStorage.setItem('role', 'admin')
+        router.push('/dashboard')
+      } else {
+        snackbarText.value = 'Either email or password was incorrect.';
+        snackbarVisible.value = true;
+      }
+    } catch (error) {
+    console.error('Login failed:', error);
+    // Handle error messages here
+    } finally {
+    loading.value = false;
+    }
   };
 
 </script>
@@ -73,33 +81,33 @@
             <v-col cols="12" md="6" class="right-side pa-8 d-flex flex-column justify-center ga-3">
             <!-- Your form content here -->
                 <h2 class="text-h2 mb-4 text-center shrikhand-regular">Student<br/>Login</h2>
-                <v-form class="w-75 align-self-center">
-                <v-text-field
-                    v-model="email"
-                    label="Email"
-                    type="email"
-                    prepend-icon="mdi-email"
-                    required
-                ></v-text-field>
-                <v-text-field
-                    label="Password"
-                    v-model="password"
-                    placeholder="Enter your password"
-                    :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="visible ? 'text' : 'password'"
-                    @click:append-inner="visible = !visible"
-                    prepend-icon="mdi-lock"
-                    required
-                ></v-text-field>
-                <v-btn type="submit" color="uni-gold" class="mt-4">Login</v-btn>
+                <v-form class="w-75 align-self-center" @submit.prevent="handleLoginSubmit">
+                    <v-text-field
+                        v-model="email"
+                        label="Email"
+                        type="email"
+                        prepend-icon="mdi-email"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        label="Password"
+                        v-model="password"
+                        placeholder="Enter your password"
+                        :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="visible ? 'text' : 'password'"
+                        @click:append-inner="visible = !visible"
+                        prepend-icon="mdi-lock"
+                        required
+                    ></v-text-field>
+                    <v-btn type="submit" color="uni-gold" class="mt-4">Login</v-btn>
                 </v-form>
                 <div class="d-flex justify-center align-center">
-                <v-btn 
-                class="mt-3" 
-                variant="plain" 
-                color="grey-darken-3"
-                @click="toggleLoginMode"
-                >Login as admin</v-btn>
+                    <v-btn 
+                    class="mt-3" 
+                    variant="plain" 
+                    color="grey-darken-3"
+                    @click="toggleLoginMode"
+                    >Login as admin</v-btn>
                 </div>
             </v-col>
             </template>
@@ -109,6 +117,7 @@
                 <h2 class="text-h2 mb-4 text-center shrikhand-regular">Admin<br/>Login</h2>
                 <v-form class="w-75 align-self-center" @submit.prevent="handleLoginSubmit">
                 <v-text-field
+                    v-model="email"
                     label="Email"
                     type="email"
                     prepend-icon="mdi-email"
@@ -157,6 +166,13 @@
         </v-container>
     </v-card>
     </v-dialog>
+    <v-snackbar
+      v-model="snackbarVisible"
+      :timeout="3000"
+      color="error"
+      >
+        {{ snackbarText }}
+    </v-snackbar>
 </template>
 
 <style lang="scss" scoped>

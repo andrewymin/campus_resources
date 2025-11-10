@@ -1,20 +1,25 @@
 
 <script setup lang="ts">
-    import { ref, computed } from 'vue';
+    import { ref, computed, onMounted } from 'vue';
     import { useRouter } from 'vue-router';
     import  LoginModal  from '../components/LoginModal.vue';
     import { resetData } from '../utils/storage';
 
-    // router logic
+    // login logic
     const router = useRouter();
+    const dialog = ref(false)
+    const loggedIn = ref(false)
 
-    const goToDashboard = () => {
-      router.push('/dashboard'); 
-      // this is for testing till json data is added for form submit
+    onMounted(()=>{
+      localStorage.getItem('role') ? loggedIn.value = true : loggedIn.value = false; 
+    })
+
+    const goToDash = () => router.push('/dashboard');
+    const Logout = () => {
+      localStorage.removeItem('role');
+      loggedIn.value = false;
     }
 
-    // login logic    
-    const dialog = ref(false)
 
     // bookmark temp logic till data is given
     const isBookmarked = ref(false);
@@ -37,17 +42,39 @@
         <v-app-bar class="navBar" :elevation="0">
             <v-app-bar-title class="ml-5 ">Campus</v-app-bar-title>
 
-            <!-- <v-btn
-              @click="goToDashboard"
-              color="success"
-            >Dashboard</v-btn> -->
-
             <v-btn
               @click="resetData"
-              color="red-darken-1"
+              color="red-darken-1 mr-5"
             >Reset Data</v-btn>
-            
-            <v-hover v-slot="{ isHovering, props}">
+          
+            <v-menu
+              v-if="loggedIn"
+              transition="slide-y-transition"
+            >
+              <template v-slot:activator="{props}">
+                <v-icon
+                  class="mr-5"
+                  color="white"
+                  icon="mdi-account-circle" 
+                  v-bind="props"  
+                ></v-icon>
+              </template>
+              <v-list>
+                <v-list-item
+                  title="Student name"
+                  value="student"
+                  @click="goToDash"  
+                >
+                </v-list-item>
+                <v-list-item
+                  title="Logout"
+                  value="Logout"
+                  @click="Logout"  
+                >
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-hover v-else v-slot="{ isHovering, props}">
                 <v-btn 
                   v-bind="props"
                   variant="tonal"
