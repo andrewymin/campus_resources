@@ -8,7 +8,7 @@ export interface Data {
   bookmarks: Bookmark[]
 }
 
-interface User {
+export interface User {
   id: number
   username: string
   password: string
@@ -37,7 +37,7 @@ interface Bookmark {
 }
 
 // Load or initialize data
-export function loadData(defaultData: Data): Data{
+export function loadData(){
   const stored = localStorage.getItem('campusData')
   if (stored) {
     try {
@@ -45,13 +45,13 @@ export function loadData(defaultData: Data): Data{
     } catch (err) {
       console.warn('Error parsing localStorage data, reinitializing...', err)
       // Since data existed but something stopped it, re-setItem data
-      localStorage.setItem('campusData', JSON.stringify(defaultData))
-      return defaultData
+      localStorage.setItem('campusData', JSON.stringify(DemoData))
+      return DemoData
     }
   }
   // If nothing exists, initialize it
-  localStorage.setItem('campusData', JSON.stringify(defaultData))
-  return defaultData
+  localStorage.setItem('campusData', JSON.stringify(DemoData))
+  return DemoData
 }
 
 // Save entire dataset back to localStorage

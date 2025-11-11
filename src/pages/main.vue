@@ -1,15 +1,17 @@
 
 <script setup lang="ts">
-    import { ref, computed, onMounted } from 'vue';
+    import { ref, onMounted } from 'vue';
     import { useRouter } from 'vue-router';
     import  LoginModal  from '../components/LoginModal.vue';
-    import { resetData } from '../utils/storage';
+    import { loadData, resetData } from '../utils/storage';
+    import InfoCard from '../components/Card.vue'
 
     // login logic
     const router = useRouter();
     const dialog = ref(false)
     const loggedIn = ref(false)
     const role = localStorage.getItem('role')
+    const data = loadData();
 
     onMounted(()=>{
       role ? loggedIn.value = true : loggedIn.value = false; 
@@ -19,20 +21,8 @@
     const Logout = () => {
       localStorage.removeItem('role');
       loggedIn.value = false;
-    }
-
-
-    // bookmark temp logic till data is given
-    const isBookmarked = ref(false);
-    const bookmarkIcon = computed(()=>{
-      return isBookmarked.value ? 'mdi-bookmark' : 'mdi-bookmark-outline';
-    })
-    const bookmarkColor = computed(()=>{
-      return isBookmarked.value ? 'uni-gold' : 'black';
-    })
-    const toggleBookmark = () => {
-      isBookmarked.value = !isBookmarked.value;
-      // typically make an API call here to save the status to backend
+      router.push('/'); 
+      window.location.reload()
     }
 
 </script>
@@ -112,36 +102,23 @@
         <div>
           <h2 style="text-decoration: underline;" class="text-center">Popular Resources</h2>
           <v-container class="resources">
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
-                <v-icon
-                  :icon="bookmarkIcon"
-                  :color="bookmarkColor"
-                  end
-                  class="position-absolute"
-                  style="cursor: pointer; top: 15px; right: 15px;"
-                  @click="toggleBookmark"
-                ></v-icon>
-              </v-card>
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
-                <v-icon
-                  :icon="bookmarkIcon"
-                  :color="bookmarkColor"
-                  end
-                  class="position-absolute"
-                  style="cursor: pointer; top: 15px; right: 15px;"
-                  @click="toggleBookmark"
-                ></v-icon>
-              </v-card>
-              <v-card title="Counseling Center" text="Mental health services and walk-in counseling" elevation="4">
-                <v-icon
-                  :icon="bookmarkIcon"
-                  :color="bookmarkColor"
-                  end
-                  class="position-absolute"
-                  style="cursor: pointer; top: 15px; right: 15px;"
-                  @click="toggleBookmark"
-                ></v-icon>
-              </v-card>
+            <v-row>
+              <v-col 
+                  v-for="resource in data.resources"
+                  :key="resource.id"
+                  cols="12"
+                  lg="4"
+                  sm="6">
+                <InfoCard 
+                v-model="dialog"
+                :resourceId="resource.id"
+                :logged="loggedIn"
+                :title="resource.title" 
+                :local="resource.location"
+                :text="resource.description"
+                :hours="resource.hours"/>                
+              </v-col>
+            </v-row>
           </v-container> 
         </div>
       </div>

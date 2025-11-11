@@ -12,7 +12,14 @@
       "username": "student@demo.edu",
       "password": "studentPass123!",
       "role": "student",
-      "name": "Student one"
+      "name": "Student one",
+      "bookmarks": [
+        {
+          "id": 1,
+          "userId": 2,
+          "resourceId": 2
+        }
+      ]
     }
   ],
   "resources": [
@@ -60,13 +67,6 @@
       "id": 3,
       "title": "Stress Relief Puppies are Back!",
       "description": "Get your caffeine addiction scratched at the Hub for this week! From 8am-11am, make sure to bring your student ID for it."
-    }
-  ],
-  "bookmarks": [
-    {
-      "id": 1,
-      "userId": 2,
-      "resourceId": 2
     }
   ]
 }
