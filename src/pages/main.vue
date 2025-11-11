@@ -88,7 +88,7 @@
       <!-- Popular Resources-->
       <div class="d-flex flex-column justifiy-center align-center h-100 ga-16">
         <div class="search">
-          <h1 class="homeTitle mb-8">Campus Resources</h1>
+          <h1 class=" mb-8 text-md-h4 text-lg-h3">Campus Resources</h1>
           <v-text-field 
               class="searchBar"
               label="Search resources..."
@@ -135,9 +135,6 @@
         justify-content: center;
         gap: 3rem;
         height: 18rem;
-    }
-    .homeTitle {
-        font-size: 3rem;
     }
     .search {
         width: 100dvw;

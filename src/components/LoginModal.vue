@@ -93,7 +93,7 @@
             </v-col>
             <v-col cols="12" md="6" class="right-side pa-8 d-flex flex-column justify-center ga-3">
 
-                <h2 class="text-h2 mb-4 text-center shrikhand-regular">
+                <h2 class="text-h3 text-md-h2 mb-4 text-center shrikhand-regular">
                 <span
                     style="cursor: pointer;"
                     @click="autoLogin('student')"                  
@@ -131,7 +131,7 @@
             <template v-else="loginMode === 'admin'">
             <v-col cols="12" md="6" class=" pa-8 d-flex flex-column justify-center ga-3">
 
-                <h2 class="text-h2 mb-4 text-center shrikhand-regular">
+                <h2 class="text-h3 text-md-h2 mb-4 text-center shrikhand-regular">
                 <span
                     style="cursor: pointer;"
                     @click="autoLogin('admin')"                
