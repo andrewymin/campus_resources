@@ -41,6 +41,7 @@
             <v-menu
               v-if="loggedIn"
               transition="slide-y-transition"
+              :width="150"
             >
               <template v-slot:activator="{props}">
                 <v-icon
@@ -50,7 +51,8 @@
                   v-bind="props"  
                 ></v-icon>
               </template>
-              <v-list>
+              <v-list
+                class="text-center">
                 <v-list-item
                   v-if="role==='student'"
                   title="student name"

@@ -111,6 +111,7 @@
 
             <v-menu
               transition="slide-y-transition"
+              :width="150"
             >
               <template v-slot:activator="{props}">
                 <v-icon
@@ -121,18 +122,11 @@
                   v-bind="props"  
                 ></v-icon>
               </template>
-              <v-list>
+              <v-list
+              class="text-center">
                 <v-list-item
-                  v-if="role==='student'"
-                  title="student name"
-                  value="student"
-                  @click="goHome"  
-                >
-                </v-list-item>
-                <v-list-item
-                  v-else
-                  title="admin name"
-                  value="admin"
+                  title="Home"
+                  value="home"
                   @click="goHome"  
                 >
                 </v-list-item>
@@ -144,6 +138,7 @@
                 </v-list-item>
               </v-list>
             </v-menu>          
+
           </div>
 
        </v-toolbar>
@@ -179,5 +174,4 @@
     font-family:'Times New Roman', Times, serif;
     text-decoration: underline;
   }
-
 </style>
