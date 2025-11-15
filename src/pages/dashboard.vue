@@ -1,8 +1,9 @@
 <script setup lang="ts">
-  import { ref, shallowRef } from 'vue';    
+  import { shallowRef } from 'vue';    
   import { useRouter } from 'vue-router';
   import data from '../data/data.json';
   import { useDisplay } from 'vuetify';
+  import StudentDash from '../components/studentDash.vue';
 
   let studentData = data.users.find((user)=> user.role === 'student');
   let adminData = data.users.find((user)=> user.role === 'admin');
@@ -12,13 +13,6 @@
 
   // router logic
   const router = useRouter();
-
-  // Define data for a list of saved items to display
-  const savedItems = ref([
-    { id: 1, title: 'Item 1', text: 'This is the first saved item.' },
-    { id: 2, title: 'Item 2', text: 'This is the second saved item.' },
-    { id: 3, title: 'Item 3', text: 'This is the third saved item.' },
-  ]);
 
   const adminMenuTitles = ['Resources', 'Annoucements', 'Users'];
   const adminMenuModel = shallowRef('Resources');
@@ -120,6 +114,7 @@
         width="300" 
         color="uni-gold"
       >
+        <!-- Admin -->
         <v-list v-if="role==='admin'" lines="three">
           <v-list-item class="font-weight-bold">Announcements</v-list-item>
           <v-list-item
@@ -145,26 +140,9 @@
 
       <!-- MAIN CONTENT AREA -->
       <v-container fluid>
-        <v-row>
-          <v-col v-if="role==='student'" cols="12">
-            <h1 class="logged-title-font pl-5 pt-4">Your Bookmarks</h1>
-          </v-col>
-          <v-col 
-            v-for="item in savedItems" 
-            :key="item.id" 
-            cols="12" 
-            sm="6" 
-            md="4"
-          >
-            <v-card class="pa-4 rounded-lg">
-              <v-card-title>{{ item.title }}</v-card-title>
-              <v-card-text>{{ item.text }}</v-card-text>
-              <v-card-actions>
-                <v-btn text color="primary">View</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
+        <template v-if="role==='student'">
+          <StudentDash />
+        </template>
       </v-container>
   </v-container>
 </template>

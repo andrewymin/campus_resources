@@ -7,13 +7,13 @@
     // prop for: title, subtitle, text, icon, color, @click
     const props = defineProps({
     // Optional String props
+    modalValue: Boolean,
     resourceId: Number,
     title: String,
     local: String,
     text: String,
     hours: String,
-    modalValue: Boolean,
-    
+
     // Optional Function prop for a custom click handler
     // The type is typically Function or null/undefined
     onActionClick: Function 

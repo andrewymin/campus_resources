@@ -16,7 +16,7 @@ export interface User {
   name: string
 }
 
-interface Resource {
+export interface Resource {
   id: number
   title: string
   description: string
@@ -30,7 +30,7 @@ interface Announcement {
   description: string
 }
 
-interface Bookmark {
+export interface Bookmark {
   id: number
   userId: number
   resourceId: number

@@ -112,13 +112,13 @@
                   lg="4"
                   sm="6">
                 <InfoCard 
-                v-model="dialog"
-                :resourceId="resource.id"
-                :logged="loggedIn"
-                :title="resource.title" 
-                :local="resource.location"
-                :text="resource.description"
-                :hours="resource.hours"/>                
+                  v-model="dialog"
+                  :resourceId="resource.id"
+                  :logged="loggedIn"
+                  :title="resource.title" 
+                  :local="resource.location"
+                  :text="resource.description"
+                  :hours="resource.hours"/>                
               </v-col>
             </v-row>
           </v-container> 
