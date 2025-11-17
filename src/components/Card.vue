@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import { ref, computed } from 'vue';
-    import { loadData, saveData} from '../utils/storage';
+    import { loadData, saveData, type Bookmark} from '../utils/storage';
     
+    // Check to see if there is a user logged in
     const role = localStorage.getItem('role');
     
     // prop for: title, subtitle, text, icon, color, @click
@@ -18,52 +19,65 @@
     // The type is typically Function or null/undefined
     onActionClick: Function 
     });
-
     const emit = defineEmits(['update:modelValue']);
-
+    
+    // Get localStorage data
     const data = loadData();
+    let bookmarks = ref<Bookmark[]>([]);  
+    
     // Set type user later
+    // Find student account
     const studentData = data.users.find((user: any)=> user.role === 'student');
-    let bookmarks = studentData.bookmarks;
+    // Get bookmarks of found student account
+    let savedBookmarks = studentData.bookmarks;
+    bookmarks.value = savedBookmarks;
+    // Using ref to have it update in realtime and to check if bookmark is clicked for each card 
     const isBookmarked = ref(false);
 
+    // Check to see if card bookmark is true to set correct icon
     const bookmarkIcon = computed(()=>{
         return isBookmarked.value ? 'mdi-bookmark' : 'mdi-bookmark-outline';
     })
 
+    // Check to see if card bookmark is true to set correct icon color
     const bookmarkColor = computed(()=>{
         return isBookmarked.value ? 'uni-gold' : 'black';
     })
 
-    // every time the card mounts for how many they are, will change bookmark
+    // Every time the card mounts for how many they are (will re-mount from looping on parent component)
+    // will change bookmark to correct value
     if (role && role==='student'){
-        if(bookmarks.find((mark: any)=>mark.resourceId == props.resourceId)) {
+        if(savedBookmarks.find((mark: Bookmark)=>mark.resourceId == props.resourceId)) {
             isBookmarked.value = !isBookmarked.value;
         }
     }
 
+    // Run when clicking on bookmark, Save or delete depending on bookmark status
     const toggleBookmark = () => {
         if (!role && role!='admin') {
+            // If not signed in open login modal
             emit('update:modelValue', true); 
         }
         else if (role==='student') {
-            // check if bookmark is already saved then delete it
-            if (bookmarks.find((mark: any)=>mark.resourceId == props.resourceId)) {
-                const newBookmarks = bookmarks.filter((mark: any)=> mark.resourceId !== props.resourceId);
+            // If bookmark is already saved then delete it since user if trying to unbookmark
+            if (savedBookmarks.find((mark: Bookmark)=>mark.resourceId == props.resourceId)) {
+                const newBookmarks = savedBookmarks.filter((mark: any)=> mark.resourceId !== props.resourceId);
                 // later make currentUser in localStorage and pass in id to do this
-                // data.users.findIndex()
+                //   data.users.findIndex()
+                // Reset bookmarks in data then save it
                 data.users[1].bookmarks = newBookmarks;
                 isBookmarked.value = !isBookmarked.value;
                 saveData(data)
             } else {
-                // save bookmark
-                bookmarks.push({
-                    "id": bookmarks.length + 1,
+
+                let oldData = loadData()
+                oldData.users[1].bookmarks.push({
+                    "id": savedBookmarks.length + 1,
                     "userId": 2,
-                    "resourceId": props.resourceId
+                    "resourceId": props.resourceId || 0
                 })
                 // save data with new pushed bookmark added to it
-                saveData(data)
+                saveData(oldData)
                 isBookmarked.value = !isBookmarked.value;
             }
         }
